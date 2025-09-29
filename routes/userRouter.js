@@ -1,5 +1,4 @@
 const express = require("express");
-const userModel = require("../models/user.model");
 const router = express.Router();
 const {registerUser,loginUser,logOut} = require("../controllers/authController.js") 
 router.get("/",(req,res)=>{

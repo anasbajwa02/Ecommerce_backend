@@ -3,6 +3,11 @@ const ownerModel = require("../models/owner.models.js");
 const router = express.Router();
 const {OwnerToken}= require("../utils/ownerToken.js");
 const bcrypt = require("bcrypt")
+const ownerloggedIn = require("../middlewares/isOwnerLoggedin.js");
+const productModel = require("../models/product.model.js");
+const orderModel = require("../models/order.model.js");
+const {loginOwner,logoutOwner,Orders} = require("../controllers/ownerController.js");
+const { route } = require("./userRouter.js");
 
 
 
@@ -28,28 +33,19 @@ if (process.env.NODE_ENV === "development"){
     })
 }
 
-router.post("/login", async (req,res)=>{
-    const {email,password} = req.body 
 
-  let owner = await ownerModel.findOne({email})
-  if(!owner) return res.status(401).send("please use correct email and password")
 
-    bcrypt.compare(password,owner.password,function(err,result){
-        if(result){
-            let ownerLoginToken = OwnerToken(owner)
-            res.cookie("owner",ownerLoginToken)
-            res.send("owner logedin")
-        }else{
-            res.status(401).send("please use correct email or password")
-        }
-    })
+router.post("/login",loginOwner)
+router.get("/logout",logoutOwner)
+router.get("/orders",ownerloggedIn,Orders)
 
-})
 
-router.get("/logout",(req,res)=>{
-    res.cookie("owner","")
-    res.send("owner logout")
-})
+
+
+
+
+
+
 
 
 module.exports = router
