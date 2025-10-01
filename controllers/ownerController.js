@@ -3,6 +3,7 @@ const ownerModel = require("../models/owner.models.js");
 const {OwnerToken}= require("../utils/ownerToken.js");
 const bcrypt = require("bcrypt")
 const orderModel = require("../models/order.model.js");
+const productModel = require("../models/product.model.js");
 
 
  // for owner logedin 
@@ -44,9 +45,6 @@ const {email,password} = req.body
 
 // orders 
 
-// router.get("/orders", , async (req, res) => {
-  
-// });
 
 module.exports.Orders = async (req,res)=>{
     try {
@@ -80,4 +78,17 @@ module.exports.Orders = async (req,res)=>{
     console.error(error);
     res.status(500).json({ msg: "Server error" });
   }
+}
+
+
+module.exports.deleteProduct = async (req,res)=>{
+ try {
+    const {id} = req.body
+   if(!id) return res.status(400).json({msg:"Product Id is required"})
+    await productModel.findByIdAndDelete(id)
+  res.json({msg:"Product Deleted Successfully"})
+ } catch (error) {
+  res.status(500).json({msg:"Error deleting products",error})
+ }
+
 }

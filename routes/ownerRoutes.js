@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt")
 const ownerloggedIn = require("../middlewares/isOwnerLoggedin.js");
 const productModel = require("../models/product.model.js");
 const orderModel = require("../models/order.model.js");
-const {loginOwner,logoutOwner,Orders} = require("../controllers/ownerController.js");
+const {loginOwner,logoutOwner,Orders,deleteProduct} = require("../controllers/ownerController.js");
 const { route } = require("./userRouter.js");
 
 
@@ -38,14 +38,7 @@ if (process.env.NODE_ENV === "development"){
 router.post("/login",loginOwner)
 router.get("/logout",logoutOwner)
 router.get("/orders",ownerloggedIn,Orders)
-
-
-
-
-
-
-
-
+router.delete("/deleteproduct",ownerloggedIn,deleteProduct)
 
 
 module.exports = router
