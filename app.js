@@ -12,7 +12,7 @@ const OrderRouter = require("./routes/orderRoute.js")
 const indexRouter = require("./routes/index.js")
 
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 5000
 
 
 app.use(cookieParser())
