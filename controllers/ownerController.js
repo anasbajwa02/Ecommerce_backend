@@ -33,7 +33,7 @@ const {email,password} = req.body
     res.cookie("owner","",
         {
     httpOnly: true,
-    secure: false,   // change to true in production (HTTPS)
+    secure: true,   // change to true in production (HTTPS)
     sameSite: "lax",
     expires: new Date(0)  // expire the cookie immediately
   }

@@ -26,7 +26,7 @@ module.exports.registerUser = async (req, res) => {
           const token = genrateToken(createdUser);
           res.cookie("token", token, {
             httpOnly: true,
-            secure: false, // in production level it must be true
+            secure: true, // in production level it must be true
             sameSite: "lax",
           });
           res.status(201).json({
@@ -60,7 +60,7 @@ module.exports.loginUser = async (req, res) => {
         let token = genrateToken(user);
         res.cookie("token", token, {
           httpOnly: true,
-          secure: false, // it must be true on production level
+          secure: true, // it must be true on production level
           sameSite: "lax",
         });
         res.json({
@@ -86,7 +86,7 @@ module.exports.loginUser = async (req, res) => {
 module.exports.logOut = function (req, res) {
   res.cookie("token", "", {
     httpOnly: true,
-    secure: false,   // change to true in production (HTTPS)
+    secure: true,   // change to true in production (HTTPS)
     sameSite: "lax",
     expires: new Date(0)  // expire the cookie immediately
   });
